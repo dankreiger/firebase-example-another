@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './CustomButton.styles.scss';
 
-const CustomButton = ({ children, isGoogleSignIn, ...otherProps }) => (
+const CustomButton = ({
+  children,
+  isGoogleSignIn,
+  inverted,
+  ...otherProps
+}) => (
   <button
-    className={`${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`}
+    className={`${inverted ? 'inverted' : ''} ${
+      isGoogleSignIn ? 'google-sign-in' : ''
+    } custom-button`}
     {...otherProps}
   >
     {children}
@@ -17,7 +24,8 @@ CustomButton.propTypes = {
     PropTypes.node
   ]).isRequired,
   type: PropTypes.oneOf(['submit', 'button']),
-  isGoogleSignIn: PropTypes.bool
+  isGoogleSignIn: PropTypes.bool,
+  inverted: PropTypes.bool
 };
 
 CustomButton.defaultProps = {
