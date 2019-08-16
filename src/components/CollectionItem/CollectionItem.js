@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './CollectionItem.styles.scss';
 import CustomButton from '../CustomButton';
 import { addItem } from '../../redux/cart/cart.actions';
+import CartItemType from '../CartItem/CartItem.type';
 
 const CollectionItem = ({ item, addItem }) => {
   const { name, price, imageUrl } = item;
@@ -27,14 +28,7 @@ const CollectionItem = ({ item, addItem }) => {
 };
 
 CollectionItem.propTypes = {
-  item: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      imageUrl: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number
-    })
-  )
+  item: PropTypes.shape(CartItemType)
 };
 
 const mapDispatchToProps = dispatch => ({
