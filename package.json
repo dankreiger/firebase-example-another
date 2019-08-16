@@ -2,26 +2,24 @@
   "name": "clothing-shop",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "firebase": "6.3.5",
-    "node-sass": "4.12.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-redux": "7.1.0",
-    "react-router-dom": "5.0.1",
-    "react-scripts": "3.1.0",
-    "redux": "4.0.4",
-    "redux-logger": "3.0.6",
-    "reselect": "4.0.0"
-  },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sort": "sort-package-json",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
@@ -35,7 +33,28 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "dependencies": {
+    "firebase": "6.3.5",
+    "node-sass": "4.12.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "7.1.0",
+    "react-router-dom": "5.0.1",
+    "react-scripts": "3.1.0",
+    "redux": "4.0.4",
+    "redux-logger": "3.0.6",
+    "reselect": "4.0.0"
+  },
   "devDependencies": {
-    "react-router-prop-types": "1.0.4"
+    "@commitlint/cli": "8.1.0",
+    "@commitlint/config-conventional": "8.1.0",
+    "husky": "3.0.3",
+    "lint-staged": "9.2.1",
+    "prettier": "1.18.2",
+    "react-router-prop-types": "1.0.4",
+    "sort-package-json": "1.22.1"
   }
 }
