@@ -8,7 +8,7 @@ import {
   selectCartTotal
 } from '../../redux/cart/cart.selectors';
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
-import CartItemType from '../../components/CartItem/CartItem.type';
+import CartItemType from '../../typings/CartItem.type';
 
 const CheckoutPage = ({ cartItems, total }) => {
   return (

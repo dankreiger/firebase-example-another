@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import CartItemType from './../CartItem/CartItem.type';
 
 import './CheckoutItem.styles.scss';
 import {
@@ -9,6 +8,7 @@ import {
   addItem,
   removeItem
 } from '../../redux/cart/cart.actions';
+import CartItemType from '../../typings/CartItem.type';
 
 const CheckoutItem = ({ cartItem, clearItem, addItem, removeItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;

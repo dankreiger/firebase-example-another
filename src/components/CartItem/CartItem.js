@@ -1,6 +1,6 @@
 import React from 'react';
 import './CartItem.styles.scss';
-import CartItemType from './CartItem.type';
+import CartItemType from '../../typings/CartItem.type';
 
 const CartItem = ({ name, imageUrl, price, quantity }) => {
   return (
