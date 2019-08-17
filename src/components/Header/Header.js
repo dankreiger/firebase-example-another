@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { ReactComponent as Logo } from '../../assets/crown.svg';
+import { ReactComponent as Logo } from '../../assets/face.svg';
 
 import './Header.styles.scss';
 import { auth } from './../../firebase/firebase.utils';
