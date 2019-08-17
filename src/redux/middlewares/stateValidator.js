@@ -8,6 +8,8 @@ export default ({ getState }) => next => action => {
     console.warn('Invalid state schema detected', tv4.error);
     console.log('%c Schema is invalid! ', 'background: red; color: #fff');
     console.log(tv4.error);
+
+    console.log(JSON.stringify(getState()));
   } else {
     console.log('%c Schema is valid! ', 'background: green; color: #fff');
   }
