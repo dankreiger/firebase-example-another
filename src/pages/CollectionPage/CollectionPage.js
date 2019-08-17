@@ -1,28 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import './CollectionPage.styles.scss';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 import CollectionItemType from '../../typings/CollectionItem.type';
 import CollectionItem from '../../components/CollectionItem/CollectionItem';
+import {
+  CollectionPageWrapper,
+  CollectionTitle,
+  CollectionItemsWrapper
+} from './CollectionPage.styles';
 const CollectionPage = ({ collection }) => {
   if (collection) {
     const { title, items } = collection;
     return (
-      <div className="collection-page">
-        <h2 className="title">{title}</h2>
-        <div className="items">
+      <CollectionPageWrapper>
+        <CollectionTitle>{title}</CollectionTitle>
+        <CollectionItemsWrapper>
           {items.map(item => (
             <CollectionItem key={item.id} item={item} />
           ))}
-        </div>
-      </div>
+        </CollectionItemsWrapper>
+      </CollectionPageWrapper>
     );
   } else {
     return (
-      <div className="collection-page">
-        <h2 className="title">Page not Found</h2>
-      </div>
+      <CollectionPageWrapper>
+        <CollectionTitle>Page not Found</CollectionTitle>
+      </CollectionPageWrapper>
     );
   }
 };

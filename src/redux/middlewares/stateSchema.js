@@ -14,7 +14,7 @@ export default {
       properties: {
         currentUser: {
           $id: '#/properties/user/properties/currentUser',
-          type: 'null',
+          type: ['object', 'null'],
           title: 'The Currentuser Schema',
           default: null,
           examples: [null]

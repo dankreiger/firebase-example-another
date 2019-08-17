@@ -2,22 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
-import './MenuItem.styles.scss';
+import {
+  MenuItemWrapper,
+  BackgroundImageWrapper,
+  ContentWrapper,
+  ContentTitle,
+  ContentSubtitle
+} from './MenuItem.styles';
 
 const MenuItem = ({ title, imageUrl, size, history, match, linkUrl }) => (
-  <div
-    className={`${size || ''} menu-item`}
+  <MenuItemWrapper
+    size={size}
     onClick={() => history.push(`${match.url}${linkUrl}`)}
   >
-    <div
-      className="background-image"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    />
-    <div className="content">
-      <h1 className="title">{title.toUpperCase()}</h1>
-      <span className="substitle">Hats</span>
-    </div>
-  </div>
+    <BackgroundImageWrapper className="background-image" imageUrl={imageUrl} />
+    <ContentWrapper className="content">
+      <ContentTitle>{title.toUpperCase()}</ContentTitle>
+      <ContentSubtitle>Hats</ContentSubtitle>
+    </ContentWrapper>
+  </MenuItemWrapper>
 );
 
 MenuItem.propTypes = {

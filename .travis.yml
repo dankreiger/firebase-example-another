@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - 'stable'
+cache:
+  directories:
+    - node_modules
+install:
+  - yarn install --ignore-engines
+script:
+  - yarn test
+  - yarn build
+on:
+  branch: master

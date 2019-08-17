@@ -1,18 +1,18 @@
 import React from 'react';
-import './CartItem.styles.scss';
 import CartItemType from '../../typings/CartItem.type';
+import { CartItemWrapper, CartItemDetailsWrapper } from './CartItem.styles';
 
 const CartItem = ({ name, imageUrl, price, quantity }) => {
   return (
-    <div className="cart-item">
+    <CartItemWrapper>
       <img src={imageUrl} alt={name} />
-      <div className="item-details">
+      <CartItemDetailsWrapper>
         <span className="name">{name}</span>
         <span className="price">
           {quantity} X {price}
         </span>
-      </div>
-    </div>
+      </CartItemDetailsWrapper>
+    </CartItemWrapper>
   );
 };
 

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import './CheckoutPage.styles.scss';
 import {
   selectCartItems,
   selectCartTotal
@@ -10,38 +9,45 @@ import {
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 import CartItemType from '../../typings/CartItem.type';
 import StripeButton from '../../components/StripeButton/StripeButton';
+import {
+  CheckoutHeaderWrapper,
+  CheckoutPageWrapper,
+  HeaderBlockWrapper,
+  TotalWrapper,
+  WarningWrapper
+} from './CheckoutPage.styles';
 
 const CheckoutPage = ({ cartItems, total }) => {
   return (
-    <div className="checkout-page">
-      <div className="checkout-header">
-        <div className="header-block">
+    <CheckoutPageWrapper>
+      <CheckoutHeaderWrapper>
+        <HeaderBlockWrapper>
           <span>Product</span>
-        </div>
-        <div className="header-block">
+        </HeaderBlockWrapper>
+        <HeaderBlockWrapper>
           <span>Description</span>
-        </div>
-        <div className="header-block">
+        </HeaderBlockWrapper>
+        <HeaderBlockWrapper>
           <span>Quantity</span>
-        </div>
-        <div className="header-block">
+        </HeaderBlockWrapper>
+        <HeaderBlockWrapper>
           <span>Price</span>
-        </div>
-        <div className="header-block">
+        </HeaderBlockWrapper>
+        <HeaderBlockWrapper>
           <span>Remove</span>
-        </div>
-      </div>
+        </HeaderBlockWrapper>
+      </CheckoutHeaderWrapper>
       {cartItems.map(cartItem => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
-      <div className="total">TOTAL: ${total}</div>
-      <div className="test-warning">
+      <TotalWrapper>TOTAL: ${total}</TotalWrapper>
+      <WarningWrapper>
         *Please use the following test credit card for payments*
         <br />
         4242 4242 4242 4242 - Exp: 01/20 - CVV: 123
-      </div>
+      </WarningWrapper>
       <StripeButton price={total} />
-    </div>
+    </CheckoutPageWrapper>
   );
 };
 

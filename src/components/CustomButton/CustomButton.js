@@ -1,21 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './CustomButton.styles.scss';
+import { CustomButtonWrapper } from './CustomButton.styles';
 
-const CustomButton = ({
-  children,
-  isGoogleSignIn,
-  inverted,
-  ...otherProps
-}) => (
-  <button
-    className={`${inverted ? 'inverted' : ''} ${
-      isGoogleSignIn ? 'google-sign-in' : ''
-    } custom-button`}
-    {...otherProps}
-  >
-    {children}
-  </button>
+const CustomButton = ({ children, ...props }) => (
+  <CustomButtonWrapper {...props}>{children}</CustomButtonWrapper>
 );
 
 CustomButton.propTypes = {

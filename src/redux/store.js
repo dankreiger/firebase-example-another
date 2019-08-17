@@ -11,7 +11,7 @@ let composedEnhancers = {};
 const middleware = [];
 
 if (process.env.NODE_ENV === 'development') {
-  middleware.push(invariant(), logger, stateValidator);
+  middleware.push(invariant({ ignore: ['user'] }), logger, stateValidator);
   composeEnhancers = composeWithDevTools({
     trace: true,
     traceLimit: 25
