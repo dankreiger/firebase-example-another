@@ -46,6 +46,7 @@
     "react-scripts": "3.1.0",
     "redux": "4.0.4",
     "redux-logger": "3.0.6",
+    "redux-persist": "5.10.0",
     "reselect": "4.0.0"
   },
   "devDependencies": {
@@ -55,6 +56,8 @@
     "lint-staged": "9.2.1",
     "prettier": "1.18.2",
     "react-router-prop-types": "1.0.4",
+    "redux-devtools-extension": "2.13.8",
+    "redux-immutable-state-invariant": "2.1.0",
     "sort-package-json": "1.22.1"
   }
 }

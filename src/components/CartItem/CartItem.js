@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './CartItem.styles.scss';
 import CartItemType from './CartItem.type';
 
@@ -18,7 +17,7 @@ const CartItem = ({ name, imageUrl, price, quantity }) => {
 };
 
 CartItem.propTypes = {
-  item: PropTypes.shape(CartItemType)
+  item: CartItemType
 };
 
 export default CartItem;

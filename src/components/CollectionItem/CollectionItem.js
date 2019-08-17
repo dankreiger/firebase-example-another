@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './CollectionItem.styles.scss';
 import CustomButton from '../CustomButton';
@@ -28,7 +27,7 @@ const CollectionItem = ({ item, addItem }) => {
 };
 
 CollectionItem.propTypes = {
-  item: PropTypes.shape(CartItemType)
+  item: CartItemType
 };
 
 const mapDispatchToProps = dispatch => ({
