@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StripeCheckout from 'react-stripe-checkout';
 import puppy from '../../assets/face.svg';
-console.log(process.env);
 
 const StripeButton = ({ price }) => {
   // price in cents
