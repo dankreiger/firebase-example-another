@@ -1,67 +1,50 @@
-import React, {
-  useEffect,
-  //useRef,
-  useState
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import CollectionsOverview from '../../components/CollectionsOverview/CollectionsOverview';
 import CollectionPage from '../CollectionPage/CollectionPage';
-import {
-  firestore,
-  convertCollectionsSnapshotToMap
-} from '../../firebase/firebase.utils';
-import { updateCollections } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
 import WithSpinner from '../../components/WithSpinner/WithSpinner';
+import { selectIsCollectionFetching } from '../../redux/shop/shop.selectors';
 
 const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-const ShopPage = ({ match, updateCollections }) => {
-  const [loading, setLoading] = useState(true);
-  // const unsubscribeFromSnapshot = useRef(null);
-
+const ShopPage = ({
+  match,
+  isCollectionFetching,
+  fetchCollectionsStartAsync
+}) => {
+  const [fetchHasStarted, setFetchHasStarted] = useState(false);
   useEffect(() => {
-    async function fetchCollections() {
-      try {
-        const collectionRef = firestore.collection('collections');
+    setFetchHasStarted(true);
+    fetchCollectionsStartAsync();
+  }, [fetchCollectionsStartAsync]);
 
-        const snapshot = await collectionRef.get();
-        const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        updateCollections(collectionsMap);
-        setLoading(false);
-      } catch (err) {
-        console.log('fetch collections err', err);
-      }
-    }
-    fetchCollections();
-    /* observer pattern - also really nice */
-    // unsubscribeFromSnapshot.current = collectionRef.onSnapshot(
-    //   async snapshot => {
-    //     updateCollections(convertCollectionsSnapshotToMap(snapshot));
-    //     setLoading(false);
-    //   }
-    // );
-    // return () => {
-    //   // unsubcribe
-    //   unsubscribeFromSnapshot.current();
-    // };
-  }, [updateCollections]);
+  const routesAreLoading = () => !fetchHasStarted || isCollectionFetching;
   return (
     <div className="shop-page">
       <Route
         exact
         path={`${match.path}`}
         render={props => (
-          <CollectionsOverviewWithSpinner isLoading={loading} {...props} />
+          <CollectionsOverviewWithSpinner
+            isLoading={routesAreLoading()}
+            {...props}
+          />
         )}
       />
       <Route
         path={`${match.path}/:collectionId`}
         render={props => (
-          <CollectionPageWithSpinner isLoading={loading} {...props} />
+          <CollectionPageWithSpinner
+            isLoading={routesAreLoading()}
+            {...props}
+          />
         )}
       />
     </div>
@@ -69,15 +52,20 @@ const ShopPage = ({ match, updateCollections }) => {
 };
 
 ShopPage.propTypes = {
-  updateCollections: PropTypes.func,
+  fetchCollectionsStartAsync: PropTypes.func,
+  isCollectionFetching: PropTypes.bool,
   match: ReactRouterPropTypes.match
 };
+
+const mapStateToProps = createStructuredSelector({
+  isCollectionFetching: selectIsCollectionFetching
+});
+
 const mapDispatchToProps = dispatch => ({
-  updateCollections: collectionsMap =>
-    dispatch(updateCollections(collectionsMap))
+  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ShopPage);

@@ -5,10 +5,11 @@ import invariant from 'redux-immutable-state-invariant';
 import { persistStore } from 'redux-persist';
 import rootReducer from './root-reducer';
 import stateValidator from './middlewares/stateValidator';
+import thunk from 'redux-thunk';
 
 let composeEnhancers = {};
 let composedEnhancers = {};
-const middleware = [];
+const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
   middleware.push(invariant({ ignore: ['user'] }), logger, stateValidator);
