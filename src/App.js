@@ -10,6 +10,7 @@ import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
+
 class App extends Component {
   unsubscribeFromAuth = null;
 
@@ -25,7 +26,6 @@ class App extends Component {
           });
         });
       }
-      setCurrentUser(userAuth);
     });
   }
 

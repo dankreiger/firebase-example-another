@@ -44,14 +44,16 @@ export const CollectionFooterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 18px;
+  padding: 0 5px;
 `;
 
 export const NameWrapper = styled.span`
   width: 90%;
-  margin-bottom: 15px;
+  height: 100%;
 `;
 
 export const PriceWrapper = styled.span`
   width: 10%;
   text-align: right;
+  height: 100%;
 `;
