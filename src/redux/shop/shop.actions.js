@@ -23,13 +23,18 @@ export const fetchCollectionsStartAsync = () => {
     try {
       const collectionRef = firestore.collection('collections');
       dispatch(fetchCollectionsStart());
-
       const snapshot = await collectionRef.get();
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
       dispatch(fetchCollectionsSuccess(collectionsMap));
     } catch (err) {
-      dispatch(fetchCollectionsFailure(err.message));
-      console.log('fetchCollectionsStartAsync error', err.message);
+      const error = err.message ? err.message : err;
+      dispatch(fetchCollectionsFailure(error));
+      console.error('fetchCollectionsStartAsync error', err);
     }
   };
 };
+
+export const syncWithFirestore = collectionsMap => ({
+  type: ShopActionTypes.SYNC_WITH_FIRESTORE,
+  payload: collectionsMap
+});

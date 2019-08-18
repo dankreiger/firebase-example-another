@@ -3,7 +3,7 @@ import ShopActionTypes from './shop.types';
 const INITIAL_STATE = {
   collections: null,
   isFetching: false,
-  errorMessage: undefined
+  errorMessage: null
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -24,6 +24,11 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isFetching: false,
         errorMessage: action.payload
+      };
+    case ShopActionTypes.SYNC_WITH_FIRESTORE:
+      return {
+        ...state,
+        collections: action.payload
       };
     default:
       return state;

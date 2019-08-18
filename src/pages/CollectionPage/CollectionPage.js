@@ -1,7 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { selectCollection } from '../../redux/shop/shop.selectors';
+import {
+  selectCollection,
+  selectFetchError
+} from '../../redux/shop/shop.selectors';
 import CollectionItemType from '../../typings/CollectionItem.type';
 import CollectionItem from '../../components/CollectionItem/CollectionItem';
 import {
@@ -9,7 +13,14 @@ import {
   CollectionTitle,
   CollectionItemsWrapper
 } from './CollectionPage.styles';
-const CollectionPage = ({ collection }) => {
+const CollectionPage = ({ collection, fetchError }) => {
+  if (fetchError) {
+    return (
+      <CollectionPageWrapper>
+        <h2>Something went wrong. We're working on it</h2>
+      </CollectionPageWrapper>
+    );
+  }
   if (collection) {
     const { title, items } = collection;
     return (
@@ -32,11 +43,13 @@ const CollectionPage = ({ collection }) => {
 };
 
 CollectionPage.propTypes = {
-  collection: CollectionItemType
+  collection: CollectionItemType,
+  fetchError: PropTypes.any
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  collection: selectCollection(ownProps.match.params.collectionId)(state)
+  collection: selectCollection(ownProps.match.params.collectionId)(state),
+  fetchError: selectFetchError(state)
 });
 
 export default connect(mapStateToProps)(CollectionPage);

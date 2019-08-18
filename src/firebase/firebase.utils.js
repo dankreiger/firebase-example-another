@@ -24,7 +24,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData
       });
     } catch (error) {
-      console.log('error creating user', error.message);
+      console.log('error creating user', error);
     }
   }
   return userRef;
@@ -32,11 +32,17 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config);
 
+/**
+ *
+ * @param {string} collectionKey
+ * @param {any[]} objectsToAdd
+ */
 export const addColectionAndDocuments = async (collectionKey, objectsToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
 
   const batch = firestore.batch();
   objectsToAdd.forEach(obj => {
+    // empty param in doc() sets document ID to a unique id
     const newDocRef = collectionRef.doc();
     batch.set(newDocRef, obj);
   });
@@ -59,6 +65,14 @@ export const convertCollectionsSnapshotToMap = collections => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
+};
+
+export const handleFirestoreSync = async (snapshot, syncReduxWithFirestore) => {
+  syncReduxWithFirestore(convertCollectionsSnapshotToMap(snapshot));
+};
+
+export const handleFirestoreSyncError = err => {
+  console.error('Firestore error', err);
 };
 
 export const auth = firebase.auth();
