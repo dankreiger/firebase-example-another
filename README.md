@@ -7,3 +7,7 @@ $ touch cp .env.sample .env.local
 ```
 
 - fill in Firebase and Stripe credentials
+
+### Live
+
+https://puppy-shop.herokuapp.com

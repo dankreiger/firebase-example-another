@@ -7,8 +7,8 @@ import rootReducer from './root-reducer';
 import stateValidator from './middlewares/stateValidator';
 import thunk from 'redux-thunk';
 
-let composeEnhancers = {};
-let composedEnhancers = {};
+let composeEnhancers;
+let composedEnhancers;
 const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -18,6 +18,8 @@ if (process.env.NODE_ENV === 'development') {
     traceLimit: 25
   });
   composedEnhancers = composeEnhancers(applyMiddleware(...middleware));
+} else {
+  composedEnhancers = applyMiddleware(...middleware);
 }
 
 export const store = createStore(rootReducer, composedEnhancers);
