@@ -5,11 +5,15 @@ import invariant from 'redux-immutable-state-invariant';
 import { persistStore } from 'redux-persist';
 import rootReducer from './root-reducer';
 import stateValidator from './middlewares/stateValidator';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { fetchCollectionsStart } from './shop/shop.sagas';
 
 let composeEnhancers;
 let composedEnhancers;
-const middleware = [thunk];
+
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [sagaMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
   middleware.push(invariant({ ignore: ['user'] }), logger, stateValidator);
@@ -23,6 +27,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export const store = createStore(rootReducer, composedEnhancers);
+
+sagaMiddleware.run(fetchCollectionsStart);
 
 export const persistor = persistStore(store);
 

@@ -6,14 +6,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  fetchCollectionsStartAsync,
+  fetchCollectionsStart,
   syncWithFirestore
 } from '../../redux/shop/shop.actions';
-import {
-  firestore,
-  handleFirestoreSync,
-  handleFirestoreSyncError
-} from '../../firebase/firebase.utils';
+import { handleFirestoreSync } from '../../firebase/firebase.utils';
 import { selectIsCollectionsLoaded } from '../../redux/shop/shop.selectors';
 import CollectionsOverviewContainer from '../../components/CollectionsOverview/CollectionsOverview.container';
 import CollectionPageContainer from '../CollectionPage/CollectionPage.container';
@@ -21,25 +17,25 @@ import CollectionPageContainer from '../CollectionPage/CollectionPage.container'
 const ShopPage = ({
   match,
   isCollectionsLoaded,
-  fetchCollectionsStartAsync,
+  fetchCollectionsStart,
   syncWithFirestore
 }) => {
   const unsubscribeFromSnapshot = useRef(null);
   useEffect(() => {
     if (!isCollectionsLoaded) {
-      fetchCollectionsStartAsync();
+      fetchCollectionsStart();
     } else {
-      const collectionRef = firestore.collection('collections');
-      unsubscribeFromSnapshot.current = collectionRef.onSnapshot(
-        snapshot => handleFirestoreSync(snapshot, syncWithFirestore),
-        handleFirestoreSyncError
-      );
+      handleFirestoreSync('collections', syncWithFirestore)
+        .then(res => {
+          unsubscribeFromSnapshot.current = res;
+        })
+        .catch(err => console.error('Firestore error', err.message || err));
       return () => {
         // unsubscribe
         unsubscribeFromSnapshot.current();
       };
     }
-  }, [isCollectionsLoaded, fetchCollectionsStartAsync, syncWithFirestore]);
+  }, [isCollectionsLoaded, fetchCollectionsStart, syncWithFirestore]);
 
   return (
     <div className="shop-page">
@@ -67,7 +63,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
   syncWithFirestore: collectionsMap =>
     dispatch(syncWithFirestore(collectionsMap))
 });

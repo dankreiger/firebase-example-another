@@ -66,13 +66,18 @@ export const convertCollectionsSnapshotToMap = collections => {
     return accumulator;
   }, {});
 };
-
-export const handleFirestoreSync = async (snapshot, syncReduxWithFirestore) => {
-  syncReduxWithFirestore(convertCollectionsSnapshotToMap(snapshot));
+const handleFirestoreSyncError = err => {
+  console.error('Firestore error', err);
 };
 
-export const handleFirestoreSyncError = err => {
-  console.error('Firestore error', err);
+export const handleFirestoreSync = async (collectionName, reduxAction) => {
+  const collectionRef = firestore.collection(collectionName);
+  const subscription = collectionRef.onSnapshot(
+    async snapshot => reduxAction(convertCollectionsSnapshotToMap(snapshot)),
+    handleFirestoreSyncError
+  );
+  console.log(subscription);
+  return subscription;
 };
 
 export const auth = firebase.auth();
