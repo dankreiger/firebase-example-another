@@ -20,7 +20,8 @@ export function* fetchCollectionsAsync() {
       convertCollectionsSnapshotToMap,
       snapshot
     );
-    yield put(fetchCollectionsSuccess(collectionsMap)); // put is like dispatch
+    // create and yield a dispatch Effect with 'put'
+    yield put(fetchCollectionsSuccess(collectionsMap));
   } catch (err) {
     yield put(fetchCollectionsFailure(err.message || err));
     console.error('fetchCollectionsAsync error', err);

@@ -24,8 +24,8 @@ const CollectionPreview = ({ items, title }) => {
 };
 
 CollectionPreview.propTypes = {
-  title: PropTypes.string,
-  items: PropTypes.arrayOf(CartItemType)
+  title: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(CartItemType).isRequired
 };
 
 export default CollectionPreview;

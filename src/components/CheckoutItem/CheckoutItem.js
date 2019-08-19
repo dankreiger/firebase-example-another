@@ -35,10 +35,10 @@ const CheckoutItem = ({ cartItem, clearItemFromCart, addItem, removeItem }) => {
 };
 
 CheckoutItem.propTypes = {
-  cartItem: CartItemType,
-  clearItemFromCart: PropTypes.func,
-  addItem: PropTypes.func,
-  removeItem: PropTypes.func
+  cartItem: CartItemType.isRequired,
+  clearItemFromCart: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired
 };
 
 export default connect(

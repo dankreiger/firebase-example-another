@@ -25,7 +25,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         errorMessage: action.payload
       };
-    case ShopActionTypes.SYNC_WITH_FIRESTORE:
+    case ShopActionTypes.SYNC_COLLECTIONS_WITH_FIRESTORE:
       return {
         ...state,
         collections: action.payload

@@ -20,8 +20,8 @@ const CartIcon = ({ toggleCartHidden, itemCount }) => {
 };
 
 CartIcon.propTypes = {
-  toggleCartHidden: PropTypes.func,
-  itemCount: PropTypes.number
+  toggleCartHidden: PropTypes.func.isRequired,
+  itemCount: PropTypes.number.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

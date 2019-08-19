@@ -14,7 +14,7 @@ export const fetchCollectionsFailure = errorMessage => ({
   payload: errorMessage
 });
 
-export const syncWithFirestore = collectionsMap => ({
-  type: ShopActionTypes.SYNC_WITH_FIRESTORE,
+export const syncCollectionsWithFirestore = collectionsMap => ({
+  type: ShopActionTypes.SYNC_COLLECTIONS_WITH_FIRESTORE,
   payload: collectionsMap
 });

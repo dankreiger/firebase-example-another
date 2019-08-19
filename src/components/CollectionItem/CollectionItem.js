@@ -28,7 +28,7 @@ const CollectionItem = ({ item, addItem }) => {
 };
 
 CollectionItem.propTypes = {
-  item: CartItemType
+  item: CartItemType.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

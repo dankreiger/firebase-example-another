@@ -35,7 +35,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
 );
 
 CartDropdown.propTypes = {
-  cartItems: PropTypes.arrayOf(CartItemType)
+  cartItems: PropTypes.arrayOf(CartItemType).isRequired
 };
 
 const mapStateToProps = createStructuredSelector({

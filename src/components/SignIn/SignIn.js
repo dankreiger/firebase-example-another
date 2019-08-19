@@ -1,35 +1,37 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import FormInput from '../FormInput';
 import CustomButton from '../CustomButton';
-import { signInWithGoogle, auth } from '../../firebase/firebase.utils';
 import {
   SignInWrapper,
   SignInTitle,
   SignInButtonsWrapper
 } from './SignIn.styles';
 
+import * as userActions from '../../redux/user/user.actions';
+
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
-
+  static propTypes = {
+    googleSignInStart: PropTypes.func,
+    emailSignInStart: PropTypes.func
+  };
+  state = {
+    email: '',
+    password: ''
+  };
   handleSubmit = async event => {
     event.preventDefault();
-
     const { email, password } = this.state;
+    const { emailSignInStart } = this.props;
 
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '' });
-    } catch (error) {
-      console.log(error);
-    }
+    emailSignInStart({ email, password });
+    // try {
+    //   await auth.signInWithEmailAndPassword(email, password);
+    //   this.setState({ email: '', password: '' });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   handleChange = event => {
@@ -39,6 +41,7 @@ class SignIn extends React.Component {
   };
 
   render() {
+    const { googleSignInStart } = this.props;
     return (
       <SignInWrapper>
         <SignInTitle>I already have an account</SignInTitle>
@@ -63,7 +66,11 @@ class SignIn extends React.Component {
           />
           <SignInButtonsWrapper>
             <CustomButton type="submit"> Sign in </CustomButton>
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton
+              onClick={googleSignInStart}
+              type="button"
+              isGoogleSignIn
+            >
               {' '}
               Sign in with Google{' '}
             </CustomButton>
@@ -74,4 +81,7 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+export default connect(
+  null,
+  userActions
+)(SignIn);

@@ -18,7 +18,7 @@ const CollectionsOverview = ({ collections }) => {
 };
 
 CollectionsOverview.propTypes = {
-  collections: PropTypes.arrayOf(CollectionItemType)
+  collections: PropTypes.arrayOf(CollectionItemType).isRequired
 };
 
 const mapStateToProps = createStructuredSelector({

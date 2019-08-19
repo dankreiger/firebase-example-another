@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
-  id: PropTypes.number,
-  imageUrl: PropTypes.string,
-  title: PropTypes.string,
-  linkUrl: PropTypes.string
+  id: PropTypes.number.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  linkUrl: PropTypes.string.isRequired
 });

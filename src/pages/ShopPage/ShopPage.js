@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   fetchCollectionsStart,
-  syncWithFirestore
+  syncCollectionsWithFirestore
 } from '../../redux/shop/shop.actions';
 import { handleFirestoreSync } from '../../firebase/firebase.utils';
 import { selectIsCollectionsLoaded } from '../../redux/shop/shop.selectors';
@@ -18,14 +18,14 @@ const ShopPage = ({
   match,
   isCollectionsLoaded,
   fetchCollectionsStart,
-  syncWithFirestore
+  syncCollectionsWithFirestore
 }) => {
   const unsubscribeFromSnapshot = useRef(null);
   useEffect(() => {
     if (!isCollectionsLoaded) {
       fetchCollectionsStart();
     } else {
-      handleFirestoreSync('collections', syncWithFirestore)
+      handleFirestoreSync('collections', syncCollectionsWithFirestore)
         .then(res => {
           unsubscribeFromSnapshot.current = res;
         })
@@ -35,7 +35,11 @@ const ShopPage = ({
         unsubscribeFromSnapshot.current();
       };
     }
-  }, [isCollectionsLoaded, fetchCollectionsStart, syncWithFirestore]);
+  }, [
+    isCollectionsLoaded,
+    fetchCollectionsStart,
+    syncCollectionsWithFirestore
+  ]);
 
   return (
     <div className="shop-page">
@@ -53,9 +57,10 @@ const ShopPage = ({
 };
 
 ShopPage.propTypes = {
-  fetchCollectionsStartAsync: PropTypes.func,
-  match: ReactRouterPropTypes.match,
-  syncWithFirestore: PropTypes.func
+  isCollectionsLoaded: PropTypes.bool.isRequired,
+  fetchCollectionsStart: PropTypes.func.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
+  syncCollectionsWithFirestore: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -64,8 +69,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
-  syncWithFirestore: collectionsMap =>
-    dispatch(syncWithFirestore(collectionsMap))
+  syncCollectionsWithFirestore: collectionsMap =>
+    dispatch(syncCollectionsWithFirestore(collectionsMap))
 });
 
 export default connect(
