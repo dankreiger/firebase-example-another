@@ -1,3 +1,9 @@
+//@ts-check
+
+/**
+ * @readonly
+ * @enum {string}
+ */
 const UserActionTypes = {
   CHECK_USER_SESSION: 'CHECK_USER_SESSION',
   EMAIL_SIGN_IN_START: 'EMAIL_SIGN_IN_START',
