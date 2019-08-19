@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import FormInput from '../FormInput';
 import CustomButton from '../CustomButton';
 
 import { SignUpWrapper, SignUpTitle } from './SignUp.styles';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUpStart } from '../../redux/user/user.actions';
 
-const SignUp = () => {
+const SignUp = ({ signUpStart }) => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,32 +15,17 @@ const SignUp = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
     if (password !== confirmPassword) {
       alert("Passwords don't match");
       return;
     }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await createUserProfileDocument(user, { displayName });
-      setDisplayName('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-    } catch (error) {
-      console.error(error);
-    }
+    signUpStart({ email, password, displayName });
   };
 
   return (
     <SignUpWrapper>
       <SignUpTitle>I do not have an account</SignUpTitle>
-      <span>Sign up with your email and password fuck</span>
+      <span>Sign up with your email and password</span>
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <FormInput
           type="text"
@@ -78,4 +65,11 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+SignUp.propTypes = {
+  signUpStart: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { signUpStart }
+)(SignUp);
