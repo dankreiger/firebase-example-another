@@ -1,3 +1,4 @@
+//@ts-check
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,11 +9,22 @@ import { SignUpWrapper, SignUpTitle } from './SignUp.styles';
 import { signUpStart } from '../../redux/user/user.actions';
 
 const SignUp = ({ signUpStart }) => {
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [displayName, setDisplayName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
+  const [userCredentials, setCredentials] = useState({
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
+  const { displayName, email, password, confirmPassword } = userCredentials;
+
+  /**
+   * @param {React.FormEvent<HTMLFormElement>} event
+   */
   const handleSubmit = async event => {
     event.preventDefault();
     if (password !== confirmPassword) {
@@ -20,6 +32,14 @@ const SignUp = ({ signUpStart }) => {
       return;
     }
     signUpStart({ email, password, displayName });
+  };
+
+  /**
+   * @param {React.ChangeEvent<HTMLFormElement>} event
+   */
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
@@ -31,7 +51,7 @@ const SignUp = ({ signUpStart }) => {
           type="text"
           name="displayName"
           value={displayName}
-          handleChange={e => setDisplayName(e.target.value)}
+          handleChange={handleChange}
           label="Display Name"
           required
         />
@@ -39,7 +59,7 @@ const SignUp = ({ signUpStart }) => {
           type="text"
           name="email"
           value={email}
-          handleChange={e => setEmail(e.target.value)}
+          handleChange={handleChange}
           label="Email"
           required
         />
@@ -47,7 +67,7 @@ const SignUp = ({ signUpStart }) => {
           type="password"
           name="password"
           value={password}
-          handleChange={e => setPassword(e.target.value)}
+          handleChange={handleChange}
           label="Password"
           required
         />
@@ -55,7 +75,7 @@ const SignUp = ({ signUpStart }) => {
           type="password"
           name="confirmPassword"
           value={confirmPassword}
-          handleChange={e => setConfirmPassword(e.target.value)}
+          handleChange={handleChange}
           label="Confirm Password"
           required
         />

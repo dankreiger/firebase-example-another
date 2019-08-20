@@ -77,7 +77,6 @@ export const handleFirestoreSync = async (collectionName, reduxAction) => {
     async snapshot => reduxAction(convertCollectionsSnapshotToMap(snapshot)),
     handleFirestoreSyncError
   );
-  console.log(subscription);
   return subscription;
 };
 

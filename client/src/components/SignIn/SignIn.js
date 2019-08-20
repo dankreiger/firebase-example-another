@@ -24,8 +24,12 @@ import * as userActions from '../../redux/user/user.actions';
  * @param {SignInProps} props
  */
 const SignIn = ({ googleSignInStart, emailSignInStart }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userCredentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = userCredentials;
 
   /**
    * @param {React.FormEvent<HTMLFormElement>} event
@@ -33,6 +37,15 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
   const handleSubmit = event => {
     event.preventDefault();
     emailSignInStart({ email, password });
+  };
+
+  /**
+   * @param {React.ChangeEvent<HTMLFormElement>} event
+   */
+  const handleChange = event => {
+    const { value, name } = event.target;
+    console.log(name);
+    setCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
@@ -44,7 +57,7 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
         <FormInput
           name="email"
           type="email"
-          handleChange={({ target }) => setEmail(target.value)}
+          handleChange={handleChange}
           value={email}
           label="email"
           required
@@ -53,7 +66,7 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
           name="password"
           type="password"
           value={password}
-          handleChange={({ target }) => setPassword(target.value)}
+          handleChange={handleChange}
           label="password"
           required
         />

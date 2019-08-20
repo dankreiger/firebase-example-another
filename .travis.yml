@@ -3,11 +3,11 @@ node_js:
   - 'stable'
 cache:
   directories:
-    - node_modules
+    - client/node_modules
 install:
-  - yarn install --ignore-engines
+  - cd client && yarn install --ignore-engines
 script:
-  - yarn test
-  - yarn build
+  - cd client && yarn test
+  - cd client && yarn build
 on:
   branch: master
