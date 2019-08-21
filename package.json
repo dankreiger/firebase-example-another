@@ -5,6 +5,18 @@
     "node": "12.8.1",
     "npm": "6.10.2"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "main": "index.js",
   "repository": "git@github.com:dankreiger/firebase-example-another.git",
   "author": "Dan Kreiger <dan@dankreiger.com> (http://www.dankreiger.com/)",
@@ -18,8 +30,13 @@
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "concurrently": "4.1.2",
-    "nodemon": "1.19.1"
+    "husky": "^3.0.4",
+    "lint-staged": "^9.2.3",
+    "nodemon": "1.19.1",
+    "prettier": "^1.18.2"
   },
   "dependencies": {
     "body-parser": "1.19.0",
