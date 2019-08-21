@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CartItemType from '../../typings/CartItem.type';
 import { CartItemWrapper, CartItemDetailsWrapper } from './CartItem.styles';
 
@@ -20,4 +20,4 @@ CartItem.propTypes = {
   item: CartItemType
 };
 
-export default CartItem;
+export default memo(CartItem);
