@@ -1,18 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { selectIsCollectionsLoaded } from '../../redux/shop/shop.selectors';
 import {
   fetchCollectionsStart,
   syncCollectionsWithFirestore
 } from '../../redux/shop/shop.actions';
 import { handleFirestoreSync } from '../../firebase/firebase.utils';
-import { selectIsCollectionsLoaded } from '../../redux/shop/shop.selectors';
-import CollectionsOverviewContainer from '../../components/CollectionsOverview/CollectionsOverview.container';
-import CollectionPageContainer from '../CollectionPage/CollectionPage.container';
+import Spinner from '../../components/Spinner';
+import { ShopPageWrapper } from './ShopPage.styles';
+
+const CollectionsOverviewContainer = lazy(() =>
+  import('../../components/CollectionsOverview/CollectionsOverview.container')
+);
+const CollectionPageContainer = lazy(() =>
+  import('../CollectionPage/CollectionPage.container')
+);
 
 const ShopPage = ({
   match,
@@ -42,17 +49,19 @@ const ShopPage = ({
   ]);
 
   return (
-    <div className="shop-page">
-      <Route
-        exact
-        path={`${match.path}`}
-        component={CollectionsOverviewContainer}
-      />
-      <Route
-        path={`${match.path}/:collectionId`}
-        component={CollectionPageContainer}
-      />
-    </div>
+    <ShopPageWrapper>
+      <Suspense fallback={<Spinner />}>
+        <Route
+          exact
+          path={`${match.path}`}
+          component={CollectionsOverviewContainer}
+        />
+        <Route
+          path={`${match.path}/:collectionId`}
+          component={CollectionPageContainer}
+        />
+      </Suspense>
+    </ShopPageWrapper>
   );
 };
 
