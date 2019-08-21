@@ -7,10 +7,20 @@ export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
+
+  @media screen and (max-width: 800px) {
+    height: 60px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const LogoWrapper = styled(Link)`
   height: 100%;
+
+  @media screen and (max-width: 800px) {
+    width: 50px;
+  }
 `;
 
 export const OptionsWrapper = styled.div`
@@ -19,6 +29,9 @@ export const OptionsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  @media screen and (max-width: 800px) {
+    width: 80%;
+  }
 `;
 
 export const OptionLink = styled(Link)`
